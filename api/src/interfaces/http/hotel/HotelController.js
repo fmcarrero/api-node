@@ -6,8 +6,6 @@ const HotelController = {
   get router() {
     const router = Router();
 
-    router.use(inject('hotelSerializer'));
-
     router.get('/', inject('getAllHotel'), this.index);
     router.get('/:id', inject('getHotel'), this.show);
     router.post('/', inject('createHotel'), this.create);
@@ -18,14 +16,14 @@ const HotelController = {
   },
 
   index(req, res, next) {
-    const { getAllHotel, hotelSerializer } = req;
+    const { getAllHotel } = req;
     const { SUCCESS, ERROR } = getAllHotel.outputs;
 
     getAllHotel
       .on(SUCCESS, (hotels) => {
         res
           .status(Status.OK)
-          .json(hotels.map(hotelSerializer.serialize));
+          .json(hotels);
       })
       .on(ERROR, next);
 
@@ -33,7 +31,7 @@ const HotelController = {
   },
 
   show(req, res, next) {
-    const { getHotel, hotelSerializer } = req;
+    const { getHotel } = req;
 
     const { SUCCESS, ERROR, NOT_FOUND } = getHotel.outputs;
 
@@ -41,7 +39,7 @@ const HotelController = {
       .on(SUCCESS, (hotel) => {
         res
           .status(Status.OK)
-          .json(hotelSerializer.serialize(hotel));
+          .json(hotel);
       })
       .on(NOT_FOUND, (error) => {
         res.status(Status.NOT_FOUND).json({
@@ -50,18 +48,18 @@ const HotelController = {
         });
       })
       .on(ERROR, next);      
-      getHotel.execute(Number(req.params.id));
+      getHotel.execute(req.params.id);
   },
 
   create(req, res, next) {
-    const { createHotel, hotelSerializer } = req;
+    const { createHotel } = req;
     const { SUCCESS, ERROR, VALIDATION_ERROR } = createHotel.outputs;
 
     createHotel
       .on(SUCCESS, (hotel) => {
         res
           .status(Status.CREATED)
-          .json(hotelSerializer.serialize(hotel));
+          .json(hotel);
       })
       .on(VALIDATION_ERROR, (error) => {
         res.status(Status.BAD_REQUEST).json({
@@ -74,14 +72,14 @@ const HotelController = {
   },
 
   update(req, res, next) {
-    const { updateHotel, hotelSerializer } = req;
+    const { updateHotel } = req;
     const { SUCCESS, ERROR, VALIDATION_ERROR, NOT_FOUND } = updateHotel.outputs;
 
     updateHotel
       .on(SUCCESS, (hotel) => {
         res
           .status(Status.ACCEPTED)
-          .json(hotelSerializer.serialize(hotel));
+          .json(hotel);
       })
       .on(VALIDATION_ERROR, (error) => {
         res.status(Status.BAD_REQUEST).json({
@@ -95,9 +93,8 @@ const HotelController = {
           details: error.details
         });
       })
-      .on(ERROR, next);
-      console.log( req.body);
-      updateHotel.execute(Number(req.params.id), req.body);
+      .on(ERROR, next);     
+      updateHotel.execute(req.params.id, req.body);
   },
 
   delete(req, res, next) {
@@ -116,7 +113,7 @@ const HotelController = {
       })
       .on(ERROR, next);
 
-      deleteHotel.execute(Number(req.params.id));
+      deleteHotel.execute(req.params.id);
   }
 };
 

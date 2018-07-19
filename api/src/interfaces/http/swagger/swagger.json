@@ -80,7 +80,7 @@
             "in": "path",
             "description": "Id of Hotel to show",
             "required": true,
-            "type": "integer",
+            "type": "string",
             "format": "int64"
           }
         ],
@@ -163,7 +163,7 @@
             "in": "path",
             "description": "Id of Hotel to delete",
             "required": true,
-            "type": "integer",
+            "type": "string",
             "format": "int64"
           }
         ],

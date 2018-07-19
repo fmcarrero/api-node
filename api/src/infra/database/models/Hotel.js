@@ -1,17 +1,27 @@
-'use strict';
+const mongoose = require('mongoose').set('debug', true);
 
-module.exports = function(sequelize, DataTypes) {
-  const Hotel = sequelize.define('hotel', {
-    name: DataTypes.STRING
-  }, {
-    underscored: false,
-    timestamps: false,
-    classMethods: {
-      associate() {
-        // associations can be defined here
-      }
+const hotel = new mongoose.Schema({
+    _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        auto: true,
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    stars: {
+        type: Number
+    },
+    price: {
+        type: Number
+    },
+    image: {
+        type: String
+    },
+    amenities: {
+        type: [String]
     }
-  });
+});
 
-  return Hotel;
-};
+module.exports = mongoose.model('Hotel', hotel);

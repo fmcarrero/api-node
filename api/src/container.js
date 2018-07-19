@@ -1,7 +1,6 @@
 const { createContainer, Lifetime ,asValue ,asClass ,asFunction} = require('awilix');
 const { scopePerRequest } = require('awilix-express');
 
-const config = require('../config');
 const Application = require('./app/Application');
 const {
   CreateHotel,
@@ -11,18 +10,17 @@ const {
   DeleteHotel
 } = require('./app/hotel');
 
-const HotelSerializer = require('./interfaces/http/hotel/HotelSerializer');
+
 
 const Server = require('./interfaces/http/Server');
 const router = require('./interfaces/http/router');
 const loggerMiddleware = require('./interfaces/http/logging/loggerMiddleware');
 const errorHandler = require('./interfaces/http/errors/errorHandler');
-const devErrorHandler = require('./interfaces/http/errors/devErrorHandler');
 const swaggerMiddleware = require('./interfaces/http/swagger/swaggerMiddleware');
 
 const logger = require('./infra/logging/logger');
 const SequelizeHotelRepository = require('./infra/hotel/SequelizeHotelRepository');
-const { database, Hotel: HotelModel } = require('./infra/database/models');
+const {  Hotel: HotelModel } = require('./infra/database/models/Hotel');
 
 const container = createContainer();
 
@@ -35,8 +33,7 @@ container
   .register({
     router: asFunction(router, { lifetime: Lifetime.SINGLETON }),
     logger: asFunction(logger, { lifetime: Lifetime.SINGLETON })
-  })
-  .register({ config : asValue(config) });
+  });
 
 // Middlewares
 container
@@ -45,7 +42,7 @@ container
   })
   .register({
     containerMiddleware: asValue(scopePerRequest(container)),
-    errorHandler: asValue (config.production ? errorHandler : devErrorHandler),
+    errorHandler: asValue ( errorHandler ),
     swaggerMiddleware: asValue (swaggerMiddleware)
   });
 
@@ -56,7 +53,7 @@ container.register({
 
 // Database
 container.register({
-  database : asValue(database),
+  
   HotelModel : asValue(HotelModel)
 });
 
@@ -69,9 +66,6 @@ container.register({
   deleteHotel: asClass (DeleteHotel)
 });
 
-// Serializers
-container.register({
-  hotelSerializer: asValue(HotelSerializer)
-});
+
 
 module.exports = container;

@@ -9,12 +9,10 @@ class CreateHotel extends Operation {
 
   async execute(HotelData) {
     console.log(HotelData);
-    const { SUCCESS, ERROR, VALIDATION_ERROR } = this.outputs;
-
-    const hotel = new Hotel(HotelData);
+    const { SUCCESS, ERROR, VALIDATION_ERROR } = this.outputs;  
 
     try {
-      const newHotel = await this.hotelsRepository.add(hotel);
+      const newHotel = await this.hotelsRepository.add(HotelData);
 
       this.emit(SUCCESS, newHotel);
     } catch(error) {

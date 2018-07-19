@@ -10,10 +10,7 @@ class GetAllHotels extends Operation {
     const { SUCCESS, ERROR } = this.outputs;
 
     try {
-      const hotels = await this.hotelsRepository.getAll({
-        attributes: ['id', 'name']
-      });
-
+      const hotels = await this.hotelsRepository.getAll();
       this.emit(SUCCESS, hotels);
     } catch(error) {
       this.emit(ERROR, error);

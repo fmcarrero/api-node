@@ -1,8 +1,8 @@
 const express = require('express');
-
+const Db = require('../../infra/database/Db');
 class Server {
-  constructor({ config, router, logger }) {
-    this.config = config;
+  constructor({  router, logger }) {
+   
     this.logger = logger;
     this.express = express();
 
@@ -11,9 +11,11 @@ class Server {
   }
 
   start() {
+    
     return new Promise((resolve) => {
+      Db.init();
       const http = this.express
-        .listen(this.config.web.port, () => {
+        .listen(3000, () => {
           const { port } = http.address();
           this.logger.info(`[p ${process.pid}] Listening at port ${port}`);
           resolve();

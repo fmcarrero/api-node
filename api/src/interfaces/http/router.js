@@ -6,19 +6,8 @@ const compression = require('compression');
 const methodOverride = require('method-override');
 const controller = require('./utils/createControllerRoutes');
 
-module.exports = ({ config, containerMiddleware, loggerMiddleware, errorHandler, swaggerMiddleware }) => {
+module.exports = ({  containerMiddleware, loggerMiddleware, errorHandler, swaggerMiddleware }) => {
   const router = Router();
-
-  /* istanbul ignore if */
-  if(config.env === 'development') {
-    router.use(statusMonitor());
-  }
-
-  /* istanbul ignore if */
-  if(config.env !== 'test') {
-    router.use(loggerMiddleware);
-  }
-
   const apiRouter = Router();
   // parse application/x-www-form-urlencoded
  
