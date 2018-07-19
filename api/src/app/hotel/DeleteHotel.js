@@ -1,16 +1,16 @@
 const Operation = require('src/app/Operation');
 
-class DeleteUser extends Operation {
-  constructor({ usersRepository }) {
+class DeleteHotel extends Operation {
+  constructor({ hotelsRepository }) {
     super();
-    this.usersRepository = usersRepository;
+    this.hotelsRepository = hotelsRepository;
   }
 
-  async execute(userId) {
+  async execute(hotelId) {
     const { SUCCESS, ERROR, NOT_FOUND } = this.outputs;
 
     try {
-      await this.usersRepository.remove(userId);
+      await this.hotelsRepository.remove(hotelId);
       this.emit(SUCCESS);
     } catch(error) {
       if(error.message === 'NotFoundError') {
@@ -22,6 +22,6 @@ class DeleteUser extends Operation {
   }
 }
 
-DeleteUser.setOutputs(['SUCCESS', 'ERROR', 'NOT_FOUND']);
+DeleteHotel.setOutputs(['SUCCESS', 'ERROR', 'NOT_FOUND']);
 
-module.exports = DeleteUser;
+module.exports = DeleteHotel;

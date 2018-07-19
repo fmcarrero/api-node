@@ -2,18 +2,19 @@ const Operation = require('src/app/Operation');
 const Hotel = require('src/domain/hotel/Hotel');
 
 class CreateHotel extends Operation {
-  constructor({ HotelsRepository }) {
+  constructor({ hotelsRepository }) {
     super();
-    this.HotelsRepository = HotelsRepository;
+    this.hotelsRepository = hotelsRepository;
   }
 
   async execute(HotelData) {
+    console.log(HotelData);
     const { SUCCESS, ERROR, VALIDATION_ERROR } = this.outputs;
 
-    const Hotel = new Hotel(HotelData);
+    const hotel = new Hotel(HotelData);
 
     try {
-      const newHotel = await this.HotelsRepository.add(Hotel);
+      const newHotel = await this.hotelsRepository.add(hotel);
 
       this.emit(SUCCESS, newHotel);
     } catch(error) {

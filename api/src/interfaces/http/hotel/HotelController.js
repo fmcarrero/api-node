@@ -49,8 +49,7 @@ const HotelController = {
           details: error.details
         });
       })
-      .on(ERROR, next);
-
+      .on(ERROR, next);      
       getHotel.execute(Number(req.params.id));
   },
 
@@ -70,7 +69,7 @@ const HotelController = {
           details: error.details
         });
       })
-      .on(ERROR, next);
+      .on(ERROR, next);      
       createHotel.execute(req.body);
   },
 
@@ -97,6 +96,7 @@ const HotelController = {
         });
       })
       .on(ERROR, next);
+      console.log( req.body);
       updateHotel.execute(Number(req.params.id), req.body);
   },
 

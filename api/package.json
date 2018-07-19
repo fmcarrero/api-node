@@ -10,10 +10,10 @@
   "scripts": {
     "start": "node cluster.js",
     "dev": "cross-env NODE_PATH=. NODE_ENV=development nodemon",
-    "test": "npm run test:all",    
+    "test": "npm run test:all",
     "lint": "eslint {src,test,config}/**/*.js",
-    "sequelize": "cross-env NODE_PATH=. sequelize",   
-    "pm2": "pm2"   
+    "sequelize": "cross-env NODE_PATH=. sequelize",
+    "pm2": "pm2"
   },
   "repository": {},
   "author": "",

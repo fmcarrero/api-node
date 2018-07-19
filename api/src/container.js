@@ -1,4 +1,4 @@
-const { createContainer, Lifetime } = require('awilix');
+const { createContainer, Lifetime ,asValue ,asClass ,asFunction} = require('awilix');
 const { scopePerRequest } = require('awilix-express');
 
 const config = require('../config');
@@ -28,50 +28,50 @@ const container = createContainer();
 
 // System
 container
-  .registerClass({
-    app: [Application, { lifetime: Lifetime.SINGLETON }],
-    server: [Server, { lifetime: Lifetime.SINGLETON }]
+  .register({
+    app: asClass(Application, { lifetime: Lifetime.SINGLETON }),
+    server: asClass (Server, { lifetime: Lifetime.SINGLETON })
   })
-  .registerFunction({
-    router: [router, { lifetime: Lifetime.SINGLETON }],
-    logger: [logger, { lifetime: Lifetime.SINGLETON }]
+  .register({
+    router: asFunction(router, { lifetime: Lifetime.SINGLETON }),
+    logger: asFunction(logger, { lifetime: Lifetime.SINGLETON })
   })
-  .registerValue({ config });
+  .register({ config : asValue(config) });
 
 // Middlewares
 container
-  .registerFunction({
-    loggerMiddleware: [loggerMiddleware, { lifetime: Lifetime.SINGLETON }]
+  .register({
+    loggerMiddleware: asFunction (loggerMiddleware, { lifetime: Lifetime.SINGLETON })
   })
-  .registerValue({
-    containerMiddleware: scopePerRequest(container),
-    errorHandler: config.production ? errorHandler : devErrorHandler,
-    swaggerMiddleware: [swaggerMiddleware]
+  .register({
+    containerMiddleware: asValue(scopePerRequest(container)),
+    errorHandler: asValue (config.production ? errorHandler : devErrorHandler),
+    swaggerMiddleware: asValue (swaggerMiddleware)
   });
 
 // Repositories
-container.registerClass({
-  hotelsRepository: [SequelizeHotelRepository, { lifetime: Lifetime.SINGLETON }]
+container.register({
+  hotelsRepository: asClass(SequelizeHotelRepository, { lifetime: Lifetime.SINGLETON })
 });
 
 // Database
-container.registerValue({
-  database,
-  HotelModel
+container.register({
+  database : asValue(database),
+  HotelModel : asValue(HotelModel)
 });
 
 // Operations
-container.registerClass({
-  createHotel: CreateHotel,
-  getAllHotel: GetAllHotel,
-  getHotel: GetHotel,
-  updateHotel: UpdateHotel,
-  deleteHotel: DeleteHotel
+container.register({
+  createHotel: asClass (CreateHotel),
+  getAllHotel: asClass (GetAllHotel),
+  getHotel:    asClass (GetHotel),
+  updateHotel: asClass (UpdateHotel),
+  deleteHotel: asClass (DeleteHotel)
 });
 
 // Serializers
-container.registerValue({
-  hotelSerializer: HotelSerializer
+container.register({
+  hotelSerializer: asValue(HotelSerializer)
 });
 
 module.exports = container;

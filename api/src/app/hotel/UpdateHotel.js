@@ -1,19 +1,19 @@
 const Operation = require('src/app/Operation');
 
-class UpdateUser extends Operation {
-  constructor({ usersRepository }) {
+class UpdateHotel extends Operation {
+  constructor({ hotelsRepository }) {
     super();
-    this.usersRepository = usersRepository;
+    this.hotelsRepository = hotelsRepository;
   }
 
-  async execute(userId, userData) {
+  async execute(HotelId, hotelData) {
     const {
       SUCCESS, NOT_FOUND, VALIDATION_ERROR, ERROR
     } = this.outputs;
 
     try {
-      const user = await this.usersRepository.update(userId, userData);
-      this.emit(SUCCESS, user);
+      const hotel = await this.hotelsRepository.update(HotelId, hotelData);
+      this.emit(SUCCESS, hotel);
     } catch(error) {
       switch(error.message) {
       case 'ValidationError':
@@ -27,6 +27,6 @@ class UpdateUser extends Operation {
   }
 }
 
-UpdateUser.setOutputs(['SUCCESS', 'NOT_FOUND', 'VALIDATION_ERROR', 'ERROR']);
+UpdateHotel.setOutputs(['SUCCESS', 'NOT_FOUND', 'VALIDATION_ERROR', 'ERROR']);
 
-module.exports = UpdateUser;
+module.exports = UpdateHotel;

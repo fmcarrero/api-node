@@ -1,17 +1,17 @@
 const Operation = require('src/app/Operation');
 
-class GetUser extends Operation {
-  constructor({ usersRepository }) {
+class GetHotel extends Operation {
+  constructor({ hotelsRepository }) {
     super();
-    this.usersRepository = usersRepository;
+    this.hotelsRepository = hotelsRepository;
   }
 
-  async execute(userId) {
+  async execute(hotelId) {
     const { SUCCESS, NOT_FOUND } = this.outputs;
 
     try {
-      const user = await this.usersRepository.getById(userId);
-      this.emit(SUCCESS, user);
+      const hotel = await this.hotelsRepository.getById(hotelId);
+      this.emit(SUCCESS, hotel);
     } catch(error) {
       this.emit(NOT_FOUND, {
         type: error.message,
@@ -21,6 +21,6 @@ class GetUser extends Operation {
   }
 }
 
-GetUser.setOutputs(['SUCCESS', 'ERROR', 'NOT_FOUND']);
+GetHotel.setOutputs(['SUCCESS', 'ERROR', 'NOT_FOUND']);
 
-module.exports = GetUser;
+module.exports = GetHotel;

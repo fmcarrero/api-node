@@ -20,11 +20,15 @@ module.exports = ({ config, containerMiddleware, loggerMiddleware, errorHandler,
   }
 
   const apiRouter = Router();
-
+  // parse application/x-www-form-urlencoded
+ 
+  apiRouter.use(bodyParser.urlencoded({ extended: false }));
+  
+  
   apiRouter
     .use(methodOverride('X-HTTP-Method-Override'))
     .use(cors())
-    .use(bodyParser.json())
+    .use(bodyParser.json())   
     .use(compression())
     .use(containerMiddleware)
     .use('/docs', swaggerMiddleware);

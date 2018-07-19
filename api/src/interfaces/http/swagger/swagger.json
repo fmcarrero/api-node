@@ -4,6 +4,7 @@
     "title": "API",
     "version": "v1"
   },
+  "basePath": "/api",
   "servers": [
     {
       "description": "Local server",
@@ -69,10 +70,10 @@
         }
       }
     },
-    "/hotel/{id}": {
+    "/hotels/{id}": {
       "get": {
         "operationId": "showHotel",
-        "tags": [ "Hotel" ],
+        "tags": [ "Hotels" ],
         "parameters": [
           {
             "name": "id",
