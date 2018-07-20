@@ -6,11 +6,19 @@ class GetAllHotels extends Operation {
     this.hotelsRepository = hotelsRepository;
   }
 
-  async execute() {
+  async execute(req ) {
     const { SUCCESS, ERROR } = this.outputs;
 
     try {
-      const hotels = await this.hotelsRepository.getAll();
+      let { name, stars } = req.query;
+        const filter = {};
+        if(name) {
+          filter.name = new RegExp(name, 'ig');
+        }
+        if(stars){
+          filter.stars = { $in: stars }
+        }
+      const hotels = await this.hotelsRepository.getAll(filter);
       this.emit(SUCCESS, hotels);
     } catch(error) {
       this.emit(ERROR, error);

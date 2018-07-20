@@ -25,9 +25,8 @@ const HotelController = {
           .status(Status.OK)
           .json(hotels);
       })
-      .on(ERROR, next);
-
-      getAllHotel.execute();
+      .on(ERROR, next);        
+      getAllHotel.execute(req);
   },
 
   show(req, res, next) {

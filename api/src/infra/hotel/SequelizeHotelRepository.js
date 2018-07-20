@@ -1,25 +1,10 @@
 
 const Hotel = require('../database/models/Hotel');
 class SequelizeHotelRepository {
-  constructor({ HotelModel }) {
-    this.HotelModel = HotelModel;
-  }
+  constructor() {}
 
-  async getByExpression(req) {
-    const finder = {};
-    let { name, stars } = req.query;
-    if (name) {
-      finder.name = new RegExp(name, 'ig');
-    } else if (stars) {
-      finder.stars = Number(stars);
-    }
-    const hotels = await Hotel.find(finder);
-    return hotels;
-  }
-
-
-  async getAll() {
-    const hotels = await Hotel.find({});
+  async getAll(filter) {
+    const hotels = await Hotel.find(filter);
     return hotels;
   }
 
