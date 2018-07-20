@@ -14,11 +14,16 @@ export class HomeComponent implements OnInit {
   hotelsList: Array<any>;
   filters: Filter;
   arrStars = Array;
+  stars = [];
   constructor(private hotelService: HotelService) { }
-
   ngOnInit() {
     this.filters = new Filter('', new Array<number>());
     this.searchHotels();
+    this.fillStars();    
+  }
+
+  
+  fillStars(){
     for (let i = ConstantsHome.MAX_STARS; i > 0; i--) {
       this.stars.push({
         stars: Array(i).fill(1),
@@ -28,8 +33,6 @@ export class HomeComponent implements OnInit {
       });
     }
   }
-
-  stars = [ ];
   checkAll(ev) {
     this.stars.forEach(x => x.state = ev.target.checked);
     if(!ev.target.checked){
