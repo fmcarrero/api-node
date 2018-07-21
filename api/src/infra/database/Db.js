@@ -2,8 +2,8 @@ const Mongoose = require('mongoose');
 
 class Db {
 
-  init() {
-    const URL = process.env.MONGO_URL || "mongodb://userhotel:sistemas31@ds141671.mlab.com:41671/hoteldb_library";
+  init(dbUrl) {
+    const URL = process.env.MONGO_URL || dbUrl;
     if (! URL) {
       throw Error(`MongoDB connection url (MONGO_URL) is required, none given.`);
     }

@@ -1,6 +1,6 @@
 
 const Hotel = require('../database/models/Hotel');
-class SequelizeHotelRepository {
+class HotelRepository {
   constructor() {}
 
   async getAll(filter) {
@@ -33,4 +33,4 @@ class SequelizeHotelRepository {
  
 }
 
-module.exports = SequelizeHotelRepository;
+module.exports = HotelRepository;

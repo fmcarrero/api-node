@@ -11,7 +11,7 @@ const {
 } = require('./app/hotel');
 
 
-
+const config = require('../config');
 const Server = require('./interfaces/http/Server');
 const router = require('./interfaces/http/router');
 const loggerMiddleware = require('./interfaces/http/logging/loggerMiddleware');
@@ -19,7 +19,7 @@ const errorHandler = require('./interfaces/http/errors/errorHandler');
 const swaggerMiddleware = require('./interfaces/http/swagger/swaggerMiddleware');
 
 const logger = require('./infra/logging/logger');
-const SequelizeHotelRepository = require('./infra/hotel/SequelizeHotelRepository');
+const HotelRepository = require('./infra/hotel/HotelRepository');
 const {  Hotel: HotelModel } = require('./infra/database/models/Hotel');
 
 const container = createContainer();
@@ -33,7 +33,9 @@ container
   .register({
     router: asFunction(router, { lifetime: Lifetime.SINGLETON }),
     logger: asFunction(logger, { lifetime: Lifetime.SINGLETON })
-  });
+  })
+  .register({ config : asValue(config) })
+  ;
 
 // Middlewares
 container
@@ -48,7 +50,7 @@ container
 
 // Repositories
 container.register({
-  hotelsRepository: asClass(SequelizeHotelRepository, { lifetime: Lifetime.SINGLETON })
+  hotelsRepository: asClass(HotelRepository, { lifetime: Lifetime.SINGLETON })
 });
 
 // Database

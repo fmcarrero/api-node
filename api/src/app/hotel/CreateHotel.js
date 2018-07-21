@@ -1,6 +1,4 @@
 const Operation = require('src/app/Operation');
-const Hotel = require('src/domain/hotel/Hotel');
-
 class CreateHotel extends Operation {
   constructor({ hotelsRepository }) {
     super();
