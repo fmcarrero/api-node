@@ -29,5 +29,10 @@
   
 </dl>
 
-##Inicio rápido
+## Inicio rápido
 para lanzar la aplicacion ejecutar npm run dev
+
+## end point
+despues de iniciada la aplicación ejecutar la ruta http://localhost:3000/api/docs/ se uso swagger para la visualizacion y uso de los endpoints.
+
+alli podrar encontrar todos los puntos get, post, delet, put

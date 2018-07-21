@@ -35,6 +35,18 @@
       "post": {
         "operationId": "createHotel",
         "tags": [ "Hotels" ],
+        "parameters": [
+         
+          {
+            "in": "body",
+            "name": "body",
+            "description": "ingresar el body del json a ingresar",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/putHotel"
+            }
+          }
+        ],
         "requestBody": {
           "description": "Hotel data",
           "required": true,
@@ -116,8 +128,17 @@
             "in": "path",
             "description": "Id of Hotel to update",
             "required": true,
-            "type": "integer",
+            "type": "string",
             "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "ingresar el body del json a ingresar",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/putHotel"
+            }
           }
         ],
         "requestBody": {
@@ -126,7 +147,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewHotel"
+                "$ref": "#/components/schemas/putHotel"
               }
             }
           }
@@ -206,6 +227,29 @@
         "properties": {
           "name": {
             "type": "string"
+          }
+        }
+      },
+      "putHotel": {
+        "required": [ "name","stars","price" ,"image"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "stars" :{
+            "type": "number"
+          },
+          "price" : {
+            "type" : "number"
+          },
+          "image":{
+            "type": "string"
+          },
+          "amenities" :{
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
