@@ -6,7 +6,7 @@ class CreateHotel extends Operation {
   }
 
   async execute(HotelData) {
-    console.log(HotelData);
+   
     const { SUCCESS, ERROR, VALIDATION_ERROR } = this.outputs;  
 
     try {

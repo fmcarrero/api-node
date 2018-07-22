@@ -1,5 +1,5 @@
 module.exports = {
-  GetAllHotel: require('./GetAllHotel'),
+  GetAllHotels: require('./GetAllHotels'),
   CreateHotel: require('./CreateHotel'),
   GetHotel: require('./GetHotel'),
   UpdateHotel: require('./UpdateHotel'),

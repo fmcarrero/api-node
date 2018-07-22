@@ -4,7 +4,7 @@ const { scopePerRequest } = require('awilix-express');
 const Application = require('./app/Application');
 const {
   CreateHotel,
-  GetAllHotel,
+  GetAllHotels,
   GetHotel,
   UpdateHotel,
   DeleteHotel
@@ -20,14 +20,14 @@ const swaggerMiddleware = require('./interfaces/http/swagger/swaggerMiddleware')
 
 const logger = require('./infra/logging/logger');
 const HotelRepository = require('./infra/hotel/HotelRepository');
-const {  Hotel: HotelModel } = require('./infra/database/models/Hotel');
+const hotel  = require('./infra/database/models/Hotel');
 
 const container = createContainer();
 
 // System
 container
   .register({
-    app: asClass(Application, { lifetime: Lifetime.SINGLETON }),
+     app: asClass(Application, { lifetime: Lifetime.SINGLETON }),
     server: asClass (Server, { lifetime: Lifetime.SINGLETON })
   })
   .register({
@@ -54,15 +54,15 @@ container.register({
 });
 
 // Database
-container.register({
-  
-  HotelModel : asValue(HotelModel)
+
+container.register({ 
+  hotelModel : asFunction(hotel)
 });
 
 // Operations
 container.register({
   createHotel: asClass (CreateHotel),
-  getAllHotel: asClass (GetAllHotel),
+  getAllHotel: asClass (GetAllHotels),
   getHotel:    asClass (GetHotel),
   updateHotel: asClass (UpdateHotel),
   deleteHotel: asClass (DeleteHotel)

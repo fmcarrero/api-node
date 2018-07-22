@@ -1,36 +1,35 @@
 
-const Hotel = require('../database/models/Hotel');
 class HotelRepository {
-  constructor() {}
+
+  constructor({hotelModel}) {
+    this.hotelModel =hotelModel;
+  }
 
   async getAll(filter) {
-    const hotels = await Hotel.find(filter);
+    const hotels = await this.hotelModel.find(filter);
     return hotels;
   }
 
   async   getById(id) {
-    const hotel = await Hotel.findById(id)
+    const hotel = await this.hotelModel.findById(id)
     return hotel;
 
   }
 
   async add(hotel) {
-    const newHotel = await  Hotel.create(hotel);
+    const newHotel = await  this.hotelModel.create(hotel);
     return newHotel;
   }
 
   async remove(id) {
-    const hotel = await Hotel.findById(id).remove();   
+    const hotel = await this.hotelModel.findById(id).remove();   
     return hotel;
   }
 
   async update(id, newData) {
-    const hotel = await Hotel.findByIdAndUpdate(id, newData);
+    const hotel = await this.hotelModel.findByIdAndUpdate(id, newData);
     return hotel;
-  }
-
- 
- 
+  } 
 }
 
 module.exports = HotelRepository;

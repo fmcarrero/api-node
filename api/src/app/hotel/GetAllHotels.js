@@ -1,6 +1,6 @@
 const Operation = require('src/app/Operation');
 
-class GetAllHotels extends Operation {
+class GetAllHotels extends Operation  {
   constructor({ hotelsRepository }) {
     super();
     this.hotelsRepository = hotelsRepository;
